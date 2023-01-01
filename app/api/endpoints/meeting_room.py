@@ -18,8 +18,8 @@ router = APIRouter()
     response_model_exclude_none=True,
 )
 async def create_new_meeting_room(
-        meeting_room: MeetingRoomCreate,
-        session: AsyncSession = Depends(get_async_session),
+    meeting_room: MeetingRoomCreate,
+    session: AsyncSession = Depends(get_async_session),
 ):
     await check_name_duplicate(meeting_room.name, session)
     new_room = await meeting_room_crud.create(meeting_room, session)
@@ -32,7 +32,7 @@ async def create_new_meeting_room(
     response_model_exclude_none=True,
 )
 async def get_all_meeting_rooms(
-        session: AsyncSession = Depends(get_async_session),
+    session: AsyncSession = Depends(get_async_session),
 ):
     all_rooms = await meeting_room_crud.get_multi(session)
     return all_rooms
