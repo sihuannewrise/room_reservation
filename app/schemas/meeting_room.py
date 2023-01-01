@@ -1,20 +1,25 @@
 from typing import Optional
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 
-
-class MeetingRoomCreate(BaseModel):
-    name: str = Field(
-        ..., max_length=100,
-        title='Название', description='Описание',
-    )
+class MeetingRoomBase(BaseModel):
+    name: Optional[str] = Field(None, max_length=100,)
     description: Optional[str]
 
     class Config:
-        title = 'Класс для создания переговорок'
-        min_anystr_length = 2
+        title = 'Базовый класс для переговорок'
+        min_anystr_length = 1
 
-    @validator('name')
-    def name_cant_be_numeric(cls, value: str):
-        if value.isnumeric():
-            raise ValueError('Имя не может быть числом')
-        return value
+
+class MeetingRoomCreate(MeetingRoomBase):
+    name: str = Field(..., min_length=1, max_length=100)
+
+    class Config:
+        title = 'Класс для создания переговорок'
+
+
+class MeetingRoomDB(MeetingRoomCreate):
+    id: int
+
+    class Config:
+        title = 'Класс со схемой ответа из БД'
+        orm_mode = True
