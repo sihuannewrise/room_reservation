@@ -1,4 +1,5 @@
 from typing import Optional
+
 from pydantic import BaseModel, Field
 
 class MeetingRoomBase(BaseModel):
@@ -15,6 +16,10 @@ class MeetingRoomCreate(MeetingRoomBase):
 
     class Config:
         title = 'Класс для создания переговорок'
+
+
+class MeetingRoomUpdate(MeetingRoomBase):
+    pass
 
 
 class MeetingRoomDB(MeetingRoomCreate):
