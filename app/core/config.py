@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     app_title: str = 'Бронирование переговорок в core.congig.py'
     app_description: str = 'Описание в core.congig.py'
     database_url: str
+    secret: str = 'SECRET'
 
     class Config:
         env_file = '.env'
